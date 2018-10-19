@@ -1,9 +1,11 @@
-import unittest,json
+import unittest
+import json
 
 from main import app
 
 
 class FlaskTestCase(unittest.TestCase):
+
     def setUp(self):
         app.config['TESTING'] = True
         self.app = app.test_client()
@@ -18,6 +20,9 @@ class FlaskTestCase(unittest.TestCase):
         resp = json.loads(response.data)
         self.assertEqual(resp['answer'],35,'Multiply endpoint failed known answer 7*5 = 35')
 
+    def test_uppercase(self):
+        response = self.app.get('/touppercase?s="xomniadisney')
+        self.assertEqual(response, 'XOMNIADISNEY', 'To uppercase test failed')
 
     # TODO DEFINE TWO MORE TESTS ON THE END POINTS
 
